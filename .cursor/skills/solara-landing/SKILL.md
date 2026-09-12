@@ -1,15 +1,15 @@
 ---
 name: solara-landing
 description: >-
-  Conventions for the Solara solar-installation landing page (React, Vite,
+  Conventions for the SELLA SOLAR solar-installation landing page (React, Vite,
   Tailwind, Framer Motion). Use when editing this repo, adding sections,
   changing copy, restyling the hero day/night dissolve, or updating CTAs,
   calculator, or nav.
 ---
 
-# Solara landing
+# SELLA SOLAR landing
 
-Single-page marketing site. Brand: **Solara**. All user-facing copy is Ukrainian.
+Single-page marketing site. Brand: **SELLA SOLAR**. All user-facing copy is Ukrainian.
 
 ## Copy
 

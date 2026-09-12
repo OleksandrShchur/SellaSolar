@@ -1,6 +1,6 @@
 import { animate, useMotionValue, useMotionValueEvent, useReducedMotion } from 'framer-motion'
 import { useEffect, useState } from 'react'
-import { calculator } from '../content/site'
+import { calculator, footer } from '../content/site'
 import { Container } from '../components/layout/Container'
 import { Magnet } from '../components/ui/Magnet'
 
@@ -15,18 +15,20 @@ const YIELD_KWH_PER_KWP = 1120
 /** Daytime self-consumption share, no green-tariff income. */
 const SELF_CONSUMPTION = 0.7
 const MIN_KWP = 5
-const MAX_KWP = 30
+/** Covers billMax 20 000 грн (~50 кВт at current tariff/yield). */
+const MAX_KWP = 50
 const MIN_SYSTEM_COST = 180_000
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value))
 }
 
-/** 2026 UA turnkey грн/кВт: ~31k at 5–10 kW, ~28k at 15 kW, ~25k at 30 kW. */
+/** 2026 UA turnkey грн/кВт: ~31k at 5–10 kW, ~28k at 15 kW, ~25k at 30 kW, ~22k at 50 kW. */
 function pricePerKw(kwp: number) {
   if (kwp <= 10) return 31_000
   if (kwp <= 15) return 31_000 - ((kwp - 10) / 5) * 3_000
-  return 28_000 - ((kwp - 15) / 15) * 3_000
+  if (kwp <= 30) return 28_000 - ((kwp - 15) / 15) * 3_000
+  return 25_000 - ((kwp - 30) / 20) * 3_000
 }
 
 function computeSavings(bill: number) {
@@ -100,7 +102,10 @@ export function SavingsCalculator() {
               />
 
               <Magnet className="mt-2 w-full self-start sm:w-auto">
-                <a href="#contact-cta" className="btn-solar w-full px-8 py-3.5 uppercase tracking-wide sm:w-auto">
+                <a
+                  href={`tel:${footer.contact.phone.replace(/[\s()]/g, '')}`}
+                  className="btn-solar w-full px-8 py-3.5 uppercase tracking-wide sm:w-auto"
+                >
                   {calculator.cta}
                 </a>
               </Magnet>
