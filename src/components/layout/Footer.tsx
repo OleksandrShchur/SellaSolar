@@ -1,5 +1,6 @@
 import { Instagram, MapPin, Phone } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 import { brand, footer, navLinks } from '../../content/site'
 import { Container } from './Container'
 
@@ -78,9 +79,13 @@ export function Footer() {
           <p>{footer.copyright}</p>
           <div className="flex gap-4">
             {footer.legal.map((item) => (
-              <a key={item.label} href={item.href} className="inline-flex min-h-11 items-center hover:text-primary">
+              <Link
+                key={item.label}
+                to={item.href}
+                className="inline-flex min-h-11 items-center hover:text-primary"
+              >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </div>
         </Container>
