@@ -2,7 +2,6 @@ import { Footer } from './components/layout/Footer'
 import { Navbar } from './components/layout/Navbar'
 import { HeroThemeProvider } from './context/HeroThemeContext'
 import { FAQ } from './sections/FAQ'
-import { FinalCTA } from './sections/FinalCTA'
 import { Hero } from './sections/Hero'
 import { HowItWorks } from './sections/HowItWorks'
 import { SavingsCalculator } from './sections/SavingsCalculator'
@@ -22,7 +21,6 @@ export default function App() {
         <Technology />
         <Testimonials />
         <FAQ />
-        <FinalCTA />
       </main>
       <Footer />
     </HeroThemeProvider>

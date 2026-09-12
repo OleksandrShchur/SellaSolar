@@ -4,9 +4,17 @@ import { testimonials } from '../content/site'
 import { Container } from '../components/layout/Container'
 import { SectionHeading } from '../components/layout/SectionHeading'
 
+function wrapLoop(el: HTMLDivElement) {
+  const half = el.scrollWidth / 2
+  if (half <= 0) return
+  if (el.scrollLeft >= half) el.scrollLeft -= half
+  else if (el.scrollLeft <= 0) el.scrollLeft += half
+}
+
 export function Testimonials() {
   const trackRef = useRef<HTMLDivElement>(null)
   const pausedRef = useRef(false)
+  const draggingRef = useRef(false)
 
   useEffect(() => {
     const el = trackRef.current
@@ -21,15 +29,68 @@ export function Testimonials() {
       last = now
       if (!pausedRef.current) {
         el.scrollLeft += dt * 0.035
-        if (el.scrollLeft >= el.scrollWidth / 2) {
-          el.scrollLeft = 0
-        }
+        wrapLoop(el)
       }
       frame = requestAnimationFrame(tick)
     }
 
     frame = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(frame)
+  }, [])
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+
+    let lastX = 0
+    let moved = false
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== 'touch' && e.button !== 0) return
+      draggingRef.current = true
+      moved = false
+      lastX = e.clientX
+      pausedRef.current = true
+      el.setPointerCapture(e.pointerId)
+    }
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!draggingRef.current) return
+      const dx = e.clientX - lastX
+      if (dx === 0) return
+      if (Math.abs(dx) > 2) moved = true
+      lastX = e.clientX
+      el.scrollLeft -= dx
+      wrapLoop(el)
+    }
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!draggingRef.current) return
+      draggingRef.current = false
+      if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
+      if (e.pointerType === 'touch' || !el.matches(':hover')) pausedRef.current = false
+    }
+
+    const onClickCapture = (e: MouseEvent) => {
+      if (!moved) return
+      e.preventDefault()
+      e.stopPropagation()
+      moved = false
+    }
+
+    el.addEventListener('pointerdown', onPointerDown)
+    el.addEventListener('pointermove', onPointerMove)
+    el.addEventListener('pointerup', onPointerUp)
+    el.addEventListener('pointercancel', onPointerUp)
+    el.addEventListener('click', onClickCapture, true)
+
+    return () => {
+      el.removeEventListener('pointerdown', onPointerDown)
+      el.removeEventListener('pointermove', onPointerMove)
+      el.removeEventListener('pointerup', onPointerUp)
+      el.removeEventListener('pointercancel', onPointerUp)
+      el.removeEventListener('click', onClickCapture, true)
+    }
   }, [])
 
   const items = [...testimonials.items, ...testimonials.items]
@@ -43,25 +104,19 @@ export function Testimonials() {
       <div className="marquee-fade">
         <div
           ref={trackRef}
-          className="flex cursor-grab gap-5 overflow-x-auto px-4 pb-4 scrollbar-none active:cursor-grabbing sm:px-6"
-          style={{ scrollbarWidth: 'none' }}
+          className="flex cursor-grab gap-5 overflow-x-hidden px-4 pb-4 active:cursor-grabbing sm:px-6"
+          style={{ touchAction: 'pan-y' }}
           onMouseEnter={() => {
             pausedRef.current = true
           }}
           onMouseLeave={() => {
-            pausedRef.current = false
-          }}
-          onTouchStart={() => {
-            pausedRef.current = true
-          }}
-          onTouchEnd={() => {
-            pausedRef.current = false
+            if (!draggingRef.current) pausedRef.current = false
           }}
         >
           {items.map((item, index) => (
             <article
               key={`${item.name}-${index}`}
-              className="w-72 max-w-[calc(100vw-2.5rem)] shrink-0 rounded-2xl border border-white/70 bg-cream/90 p-6 shadow-soft"
+              className="w-72 max-w-[calc(100vw-2.5rem)] shrink-0 select-none rounded-2xl border border-white/70 bg-cream/90 p-6 shadow-soft"
             >
               <div className="flex gap-0.5" aria-label={`${item.rating} з 5`}>
                 {Array.from({ length: item.rating }).map((_, i) => (
