@@ -1,28 +1,18 @@
-import { Footer } from './components/layout/Footer'
-import { Navbar } from './components/layout/Navbar'
-import { HeroThemeProvider } from './context/HeroThemeContext'
-import { FAQ } from './sections/FAQ'
-import { Hero } from './sections/Hero'
-import { HowItWorks } from './sections/HowItWorks'
-import { SavingsCalculator } from './sections/SavingsCalculator'
-import { Technology } from './sections/Technology'
-import { Testimonials } from './sections/Testimonials'
-import { WhySolar } from './sections/WhySolar'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { SiteLayout } from './components/layout/SiteLayout'
+import { HomePage } from './pages/HomePage'
+import { PrivacyPage } from './pages/PrivacyPage'
+import { TermsPage } from './pages/TermsPage'
 
 export default function App() {
   return (
-    <HeroThemeProvider>
-      <Navbar />
-      <main>
-        <Hero />
-        <HowItWorks />
-        <WhySolar />
-        <SavingsCalculator />
-        <Technology />
-        <Testimonials />
-        <FAQ />
-      </main>
-      <Footer />
-    </HeroThemeProvider>
+    <Routes>
+      <Route element={<SiteLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="policy" element={<PrivacyPage />} />
+        <Route path="terms-of-use" element={<TermsPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
   )
 }

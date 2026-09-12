@@ -2,6 +2,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Menu, X, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { a11y, brand, hero, navCta, navLinks } from '../../content/site'
 import { useHeroTheme } from '../../context/HeroThemeContext'
 import { useScrolled } from '../../hooks/useScrolled'
@@ -9,8 +10,11 @@ import { Container } from './Container'
 
 export function Navbar() {
   const scrolled = useScrolled()
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
   const { theme } = useHeroTheme()
   const isMorning = theme === 'morning'
+  const useHeroChrome = isHome && !scrolled
   const prefersReducedMotion = useReducedMotion()
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -26,29 +30,29 @@ export function Navbar() {
     }
   }, [open])
 
-  const linkClass = scrolled
-    ? 'text-stone-600 hover:text-slate-ink'
-    : isMorning
+  const linkClass = useHeroChrome
+    ? isMorning
       ? 'text-stone-700 hover:text-slate-ink'
       : 'text-white/90 hover:text-white'
+    : 'text-stone-600 hover:text-slate-ink'
 
-  const logoTextClass = scrolled
-    ? 'text-slate-ink'
-    : isMorning
+  const logoTextClass = useHeroChrome
+    ? isMorning
       ? 'text-slate-ink'
       : 'text-white'
+    : 'text-slate-ink'
 
-  const logoIconClass = scrolled
-    ? 'bg-primary/15 text-primary'
-    : isMorning
+  const logoIconClass = useHeroChrome
+    ? isMorning
       ? 'bg-slate-ink/10 text-slate-ink'
       : 'bg-white/15 text-white'
+    : 'bg-primary/15 text-primary'
 
-  const hamburgerClass = scrolled
-    ? 'bg-cream text-slate-ink ring-1 ring-stone-300/80'
-    : isMorning
+  const hamburgerClass = useHeroChrome
+    ? isMorning
       ? 'bg-slate-ink/10 text-slate-ink ring-1 ring-slate-ink/15'
       : 'bg-white/15 text-white ring-1 ring-white/20 backdrop-blur-sm'
+    : 'bg-cream text-slate-ink ring-1 ring-stone-300/80'
 
   const heroCtaClass = isMorning
     ? 'bg-slate-ink text-cream hover:bg-slate-ink/90'
@@ -122,13 +126,13 @@ export function Navbar() {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-out ${
-          scrolled
-            ? 'border-b border-stone-300/50 bg-cream/90 shadow-soft backdrop-blur-md'
-            : 'bg-transparent'
+          useHeroChrome
+            ? 'bg-transparent'
+            : 'border-b border-stone-300/50 bg-cream/90 shadow-soft backdrop-blur-md'
         }`}
       >
         <Container className="flex h-16 items-center justify-between gap-2 md:h-20">
-          <a href="#home" className="flex min-h-11 shrink-0 items-center gap-2">
+          <Link to="/" className="flex min-h-11 shrink-0 items-center gap-2">
             <span
               className={`flex h-9 w-9 items-center justify-center rounded-xl transition-colors duration-500 ${logoIconClass}`}
             >
@@ -139,14 +143,18 @@ export function Navbar() {
             >
               {brand.name}
             </span>
-          </a>
+          </Link>
 
-          <p
-            aria-hidden="true"
-            className={`min-w-0 flex-1 text-center font-heading text-xs font-bold leading-tight tracking-tight sm:text-sm lg:hidden ${logoTextClass}`}
-          >
-            {hero.headline}
-          </p>
+          {isHome ? (
+            <p
+              aria-hidden="true"
+              className={`min-w-0 flex-1 text-center font-heading text-xs font-bold leading-tight tracking-tight sm:text-sm lg:hidden ${logoTextClass}`}
+            >
+              {hero.headline}
+            </p>
+          ) : (
+            <div className="min-w-0 flex-1 lg:hidden" />
+          )}
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Основна навігація">
             {navLinks.map((link) => (
@@ -164,9 +172,9 @@ export function Navbar() {
             <a
               href={navCta.href}
               className={
-                scrolled
-                  ? 'btn-solar'
-                  : `inline-flex min-h-11 items-center rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-500 ${heroCtaClass}`
+                useHeroChrome
+                  ? `inline-flex min-h-11 items-center rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-500 ${heroCtaClass}`
+                  : 'btn-solar'
               }
             >
               {navCta.label}

@@ -9,7 +9,7 @@ description: >-
 
 # SELLA SOLAR landing
 
-Single-page marketing site. Brand: **SELLA SOLAR**. All user-facing copy is Ukrainian.
+Marketing site with React Router. Brand: **SELLA SOLAR**. All user-facing copy is Ukrainian.
 
 ## Copy
 
@@ -17,9 +17,19 @@ Single-page marketing site. Brand: **SELLA SOLAR**. All user-facing copy is Ukra
 - Do not hardcode marketing text in components.
 - Keep `index.html` `lang="uk"` and UAH formatting (`uk-UA`) unless asked otherwise.
 
+## Routes
+
+- `/` — home (landing sections)
+- `/policy` — Політика конфіденційності (`privacy` in `site.ts`)
+- `/terms-of-use` — Умови використання (`terms` in `site.ts`)
+
+Shared shell: `SiteLayout` (Navbar + Outlet + Footer). Section anchors from any page use `/#section-id` (e.g. `/#quote`). Footer legal links use React Router `Link`.
+
+Static hosts need SPA fallback to `index.html` for the legal paths.
+
 ## Sections
 
-Order is fixed in `src/App.tsx`. New blocks: add a section component under `src/sections/`, export copy from `site.ts`, insert in `App.tsx`, add `id` matching nav/anchors.
+Home order is fixed in `src/pages/HomePage.tsx`. New blocks: add a section component under `src/sections/`, export copy from `site.ts`, insert in `HomePage.tsx`, add `id` matching nav/anchors.
 
 Wrap with `Container`. Titles via `SectionHeading`. CTAs via `ContactButton` (or `LiveProjectButton` where already used).
 
@@ -29,7 +39,7 @@ Wrap with `Container`. Titles via `SectionHeading`. CTAs via `ContactButton` (or
 - Images: `/assets/hero/morning.png` and `/assets/hero/night.png` (files in `public/assets/hero/`).
 - Keep both layers on the same `object-position` so the building does not shift.
 - Dissolve: night image always visible underneath; morning `motion.img` opacity 1/0. Preload both on mount.
-- Navbar colors follow theme until scroll (`useScrolled`); then use the scrolled (light) chrome.
+- Navbar colors follow theme until scroll (`useScrolled`); then use the scrolled (light) chrome. Off-home routes always use scrolled chrome.
 - Respect `useReducedMotion()` for the image crossfade.
 
 Do not switch the hero to CSS `background-image` or independent crops per theme.
@@ -49,4 +59,4 @@ Use tokens from `tailwind.config.js`: `primary`, `primary-light`, `secondary`, `
 
 ## Scope
 
-Do not add routing, auth, or a CMS unless requested. Prefer small, section-local changes over new global theme systems.
+Do not add auth or a CMS unless requested. Prefer small, section-local changes over new global theme systems. Legal routes above are intentional; avoid extra routing unless asked.
