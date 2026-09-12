@@ -20,8 +20,8 @@ Marketing site with React Router. Brand: **SELLA SOLAR**. All user-facing copy i
 ## Routes
 
 - `/` — home (landing sections)
-- `/konfidencijnist` — Політика конфіденційності (`privacy` in `site.ts`)
-- `/umovy` — Умови використання (`terms` in `site.ts`)
+- `/policy` — Політика конфіденційності (`privacy` in `site.ts`)
+- `/terms-of-use` — Умови використання (`terms` in `site.ts`)
 
 Shared shell: `SiteLayout` (Navbar + Outlet + Footer). Section anchors from any page use `/#section-id` (e.g. `/#quote`). Footer legal links use React Router `Link`.
 

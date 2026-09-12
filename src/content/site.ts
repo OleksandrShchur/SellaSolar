@@ -280,8 +280,8 @@ export const footer = {
   },
   copyright: `© ${new Date().getFullYear()} SELLA SOLAR. Усі права захищено.`,
   legal: [
-    { label: 'Конфіденційність', href: '/konfidencijnist' },
-    { label: 'Умови використання', href: '/umovy' },
+    { label: 'Конфіденційність', href: '/policy' },
+    { label: 'Умови використання', href: '/terms-of-use' },
   ],
   aria: {
     instagram: 'Instagram',

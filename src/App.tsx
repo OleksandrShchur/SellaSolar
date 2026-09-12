@@ -9,8 +9,8 @@ export default function App() {
     <Routes>
       <Route element={<SiteLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="konfidencijnist" element={<PrivacyPage />} />
-        <Route path="umovy" element={<TermsPage />} />
+        <Route path="policy" element={<PrivacyPage />} />
+        <Route path="terms-of-use" element={<TermsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
