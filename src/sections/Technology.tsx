@@ -73,7 +73,7 @@ export function Technology() {
                   ))}
                 </ul>
                 <a
-                  href="/#quote"
+                  href={`${import.meta.env.BASE_URL}#quote`}
                   className="mt-8 inline-flex min-h-11 items-center text-sm font-semibold text-primary transition-colors hover:text-primary-light"
                 >
                   {tab.learnMore} →

@@ -14,6 +14,10 @@ const IMAGE_DURATION = 0.5
 /** Shared crop so morning/night facades stay locked during dissolve */
 const HERO_IMG_CLASS =
   'absolute inset-0 h-full w-full object-cover object-[50%_42%] lg:object-[50%_48%]'
+const HERO_IMAGES = [
+  `${import.meta.env.BASE_URL}assets/hero/morning.png`,
+  `${import.meta.env.BASE_URL}assets/hero/night.png`,
+] as const
 
 export function Hero() {
   const { theme, setTheme } = useHeroTheme()
@@ -21,7 +25,7 @@ export function Hero() {
   const prefersReducedMotion = useReducedMotion()
 
   useEffect(() => {
-    ;['/assets/hero/morning.png', '/assets/hero/night.png'].forEach((src) => {
+    HERO_IMAGES.forEach((src) => {
       const img = new Image()
       img.src = src
     })
@@ -48,13 +52,13 @@ export function Hero() {
       {/* Full-bleed hero images — dissolve via Morning/Night toggle */}
       <div className="absolute inset-0 overflow-hidden" aria-hidden>
         <img
-          src="/assets/hero/night.png"
+          src={HERO_IMAGES[1]}
           alt=""
           draggable={false}
           className={HERO_IMG_CLASS}
         />
         <motion.img
-          src="/assets/hero/morning.png"
+          src={HERO_IMAGES[0]}
           alt=""
           draggable={false}
           className={HERO_IMG_CLASS}
