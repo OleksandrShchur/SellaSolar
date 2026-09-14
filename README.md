@@ -1,6 +1,10 @@
-# Solara
+# SELLA SOLAR
 
-Marketing landing page for **Solara** — residential solar panel installation (Kyiv and region). All user-facing copy is Ukrainian.
+[![Deploy to GitHub Pages](https://github.com/OleksandrShchur/SellaSolar/actions/workflows/deploy.yml/badge.svg)](https://github.com/OleksandrShchur/SellaSolar/actions/workflows/deploy.yml)
+
+Marketing landing page for **SELLA SOLAR** — residential solar panel installation (Ternopil region). All user-facing copy is Ukrainian.
+
+**Live:** [https://oleksandrshchur.github.io/SellaSolar/](https://oleksandrshchur.github.io/SellaSolar/)
 
 Stack: React 18, TypeScript, Vite, Tailwind CSS, Framer Motion, Lucide.
 
