@@ -1,8 +1,14 @@
-# Solara
+# SELLA SOLAR
 
-Marketing landing page for **Solara** — residential solar panel installation (Kyiv and region). All user-facing copy is Ukrainian.
+[![Deploy to GitHub Pages](https://github.com/OleksandrShchur/SellaSolar/actions/workflows/deploy.yml/badge.svg)](https://github.com/OleksandrShchur/SellaSolar/actions/workflows/deploy.yml)
+
+Marketing landing page for **SELLA SOLAR** — residential solar panel installation (Ternopil region). All user-facing copy is Ukrainian.
+
+**Live:** [https://oleksandrshchur.github.io/SellaSolar/](https://oleksandrshchur.github.io/SellaSolar/)
 
 Stack: React 18, TypeScript, Vite, Tailwind CSS, Framer Motion, Lucide.
+
+**Node.js:** Vite 8 needs **20.19+** or **22.12+** (CI uses Node 22). Older LTS releases (e.g. 18, or early 20.x / 22.0–22.11) are unsupported for `npm run build`.
 
 ## Run locally
 
