@@ -3,22 +3,58 @@ export const brand = {
   tagline: 'Сонячні панелі',
 }
 
+/** Hash-only anchors; pair with Link to="/" + hash so BASE_URL works on GitHub Pages */
 export const navLinks = [
-  { label: 'Як це працює', href: '/#how-it-works' },
-  { label: 'Чому сонце', href: '/#why-solar' },
-  { label: 'Відгуки', href: '/#reviews' },
-  { label: 'Питання', href: '/#faq' },
+  { label: 'Як це працює', hash: '#how-it-works' },
+  { label: 'Чому сонце', hash: '#why-solar' },
+  { label: 'Відгуки', hash: '#reviews' },
+  { label: 'Питання', hash: '#faq' },
 ] as const
 
 export const navCta = {
   label: 'Безкоштовний розрахунок',
-  href: '/#quote',
+  hash: '#quote',
 }
+
+export const seo = {
+  siteName: 'SELLA SOLAR',
+  ogImage: 'assets/og/og-image.jpg',
+  locale: 'uk_UA',
+  home: {
+    title: 'SELLA SOLAR | Сонячні панелі на Тернопільщині',
+    description:
+      'SELLA SOLAR — сонячні станції під ключ на Тернопільщині. Встановлюємо, налаштовуємо, запускаємо. Щоб у вас завжди було світло.',
+  },
+  privacy: {
+    title: 'Політика конфіденційності | SELLA SOLAR',
+    description:
+      'Як SELLA SOLAR збирає, використовує та захищає персональні дані відвідувачів сайту та клієнтів на Тернопільщині.',
+  },
+  terms: {
+    title: 'Умови використання | SELLA SOLAR',
+    description:
+      'Умови користування сайтом SELLA SOLAR: інформація про послуги, калькулятор економії та відповідальність.',
+  },
+  notFound: {
+    title: 'Сторінку не знайдено | SELLA SOLAR',
+    description: 'Запитуваної сторінки не існує. Поверніться на головну SELLA SOLAR.',
+  },
+} as const
+
+export const notFound = {
+  title: 'Сторінку не знайдено',
+  body: 'Можливо, посилання застаріле або адресу введено з помилкою.',
+  cta: 'На головну',
+} as const
 
 export const hero = {
   headline: 'Щоб у вас завжди було світло',
   subheadline:
     'Встановлюємо. Налаштовуємо. Запускаємо. Сонячні станції під ключ на Тернопільщині — звертайтеся за консультацією.',
+  images: {
+    morningAlt: 'Будинок із сонячними панелями вдень на Тернопільщині',
+    nightAlt: 'Будинок із сонячними панелями та власним світлом уночі',
+  },
   toggle: {
     morning: 'День',
     night: 'Ніч',
@@ -280,8 +316,8 @@ export const footer = {
   },
   copyright: `© ${new Date().getFullYear()} SELLA SOLAR. Усі права захищено.`,
   legal: [
-    { label: 'Конфіденційність', href: '/policy' },
-    { label: 'Умови використання', href: '/terms-of-use' },
+    { label: 'Конфіденційність', href: '/privacy' },
+    { label: 'Умови використання', href: '/terms' },
   ],
   aria: {
     instagram: 'Instagram',

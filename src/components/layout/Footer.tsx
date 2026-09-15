@@ -22,27 +22,27 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
+          <p className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
             {footer.columns.links}
-          </h3>
+          </p>
           <ul className="mt-4 space-y-3">
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
+              <li key={link.hash}>
+                <Link
+                  to={{ pathname: '/', hash: link.hash }}
                   className="inline-flex min-h-11 items-center text-sm transition-colors hover:text-primary"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
+          <p className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
             {footer.columns.services}
-          </h3>
+          </p>
           <ul className="mt-4 space-y-3">
             {footer.services.map((service) => (
               <li key={service}>
@@ -53,9 +53,9 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
+          <p className="font-heading text-sm font-semibold uppercase tracking-wider text-cream">
             {footer.columns.contact}
-          </h3>
+          </p>
           <ul className="mt-4 space-y-1 text-sm">
             <li>
               <a

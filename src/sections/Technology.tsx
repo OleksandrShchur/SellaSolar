@@ -1,6 +1,7 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Battery, LayoutGrid, Smartphone } from 'lucide-react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { technology } from '../content/site'
 import { Container } from '../components/layout/Container'
 import { SectionHeading } from '../components/layout/SectionHeading'
@@ -72,12 +73,12 @@ export function Technology() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={`${import.meta.env.BASE_URL}#quote`}
+                <Link
+                  to={{ pathname: '/', hash: '#quote' }}
                   className="mt-8 inline-flex min-h-11 items-center text-sm font-semibold text-primary transition-colors hover:text-primary-light"
                 >
                   {tab.learnMore} →
-                </a>
+                </Link>
               </div>
             </motion.div>
           </AnimatePresence>

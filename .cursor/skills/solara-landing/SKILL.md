@@ -20,10 +20,10 @@ Marketing site with React Router. Brand: **SELLA SOLAR**. All user-facing copy i
 ## Routes
 
 - `/` — home (landing sections)
-- `/policy` — Політика конфіденційності (`privacy` in `site.ts`)
-- `/terms-of-use` — Умови використання (`terms` in `site.ts`)
+- `/privacy` — Політика конфіденційності (`privacy` in `site.ts`); `/policy` redirects here
+- `/terms` — Умови використання (`terms` in `site.ts`); `/terms-of-use` redirects here
 
-Shared shell: `SiteLayout` (Navbar + Outlet + Footer). Section anchors from any page use `/#section-id` (e.g. `/#quote`). Footer legal links use React Router `Link`.
+Shared shell: `SiteLayout` (Navbar + Outlet + Footer). Section anchors from any page use Router `Link` to `/` + hash (e.g. `#quote`). Footer legal links use React Router `Link`.
 
 Static hosts need SPA fallback to `index.html` for the legal paths.
 
@@ -36,9 +36,9 @@ Wrap with `Container`. Titles via `SectionHeading`. CTAs via `ContactButton` (or
 ## Hero theme
 
 - State: `HeroTheme` `'morning' | 'night'` in `src/context/HeroThemeContext.tsx`. Default morning.
-- Images: `/assets/hero/morning.png` and `/assets/hero/night.png` (files in `public/assets/hero/`).
+- Images: WebP (+ PNG fallback) in `public/assets/hero/` (`morning.webp` / `night.webp`).
 - Keep both layers on the same `object-position` so the building does not shift.
-- Dissolve: night image always visible underneath; morning `motion.img` opacity 1/0. Preload both on mount.
+- Dissolve: night loads on first night theme; morning is LCP with `fetchPriority="high"`. Preload morning WebP only.
 - Navbar colors follow theme until scroll (`useScrolled`); then use the scrolled (light) chrome. Off-home routes always use scrolled chrome.
 - Respect `useReducedMotion()` for the image crossfade.
 

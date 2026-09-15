@@ -98,22 +98,22 @@ export function Navbar() {
                 </div>
                 <nav className="flex flex-col gap-1" aria-label="Мобільна навігація">
                   {navLinks.map((link) => (
-                    <a
-                      key={link.href}
-                      href={link.href}
+                    <Link
+                      key={link.hash}
+                      to={{ pathname: '/', hash: link.hash }}
                       className="rounded-xl px-3 py-3 text-base font-medium text-stone-700 hover:bg-white/70"
                       onClick={() => setOpen(false)}
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   ))}
-                  <a
-                    href={navCta.href}
+                  <Link
+                    to={{ pathname: '/', hash: navCta.hash }}
                     className="btn-solar mt-4"
                     onClick={() => setOpen(false)}
                   >
                     {navCta.label}
-                  </a>
+                  </Link>
                 </nav>
               </motion.div>
             </AnimatePresence>
@@ -158,19 +158,19 @@ export function Navbar() {
 
           <nav className="hidden items-center gap-8 lg:flex" aria-label="Основна навігація">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.hash}
+                to={{ pathname: '/', hash: link.hash }}
                 className={`inline-flex min-h-11 items-center text-sm font-medium transition-colors duration-500 ${linkClass}`}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className="hidden lg:block">
-            <a
-              href={navCta.href}
+            <Link
+              to={{ pathname: '/', hash: navCta.hash }}
               className={
                 useHeroChrome
                   ? `inline-flex min-h-11 items-center rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-500 ${heroCtaClass}`
@@ -178,7 +178,7 @@ export function Navbar() {
               }
             >
               {navCta.label}
-            </a>
+            </Link>
           </div>
 
           <button

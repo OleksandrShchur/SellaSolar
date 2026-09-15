@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { hero } from '../content/site'
 import { Container } from '../components/layout/Container'
 import { DayNightToggle } from '../components/ui/DayNightToggle'
@@ -14,22 +14,29 @@ const IMAGE_DURATION = 0.5
 /** Shared crop so morning/night facades stay locked during dissolve */
 const HERO_IMG_CLASS =
   'absolute inset-0 h-full w-full object-cover object-[50%_42%] lg:object-[50%_48%]'
-const HERO_IMAGES = [
-  `${import.meta.env.BASE_URL}assets/hero/morning.png`,
-  `${import.meta.env.BASE_URL}assets/hero/night.png`,
-] as const
+
+const BASE = import.meta.env.BASE_URL
+const MORNING_WEBP = `${BASE}assets/hero/morning.webp`
+const MORNING_PNG = `${BASE}assets/hero/morning.png`
+const NIGHT_WEBP = `${BASE}assets/hero/night.webp`
+const NIGHT_PNG = `${BASE}assets/hero/night.png`
+const HERO_WIDTH = 1920
+const HERO_HEIGHT = 1080
 
 export function Hero() {
   const { theme, setTheme } = useHeroTheme()
   const isMorning = theme === 'morning'
   const prefersReducedMotion = useReducedMotion()
+  const [loadNight, setLoadNight] = useState(false)
 
   useEffect(() => {
-    HERO_IMAGES.forEach((src) => {
-      const img = new Image()
-      img.src = src
-    })
+    const img = new Image()
+    img.src = MORNING_WEBP
   }, [])
+
+  useEffect(() => {
+    if (!isMorning) setLoadNight(true)
+  }, [isMorning])
 
   const fadeTransition = prefersReducedMotion
     ? { duration: 0 }
@@ -50,22 +57,41 @@ export function Hero() {
       />
 
       {/* Full-bleed hero images — dissolve via Morning/Night toggle */}
-      <div className="absolute inset-0 overflow-hidden" aria-hidden>
-        <img
-          src={HERO_IMAGES[1]}
-          alt=""
-          draggable={false}
-          className={HERO_IMG_CLASS}
-        />
-        <motion.img
-          src={HERO_IMAGES[0]}
-          alt=""
-          draggable={false}
-          className={HERO_IMG_CLASS}
+      <div className="absolute inset-0 overflow-hidden">
+        {loadNight ? (
+          <picture>
+            <source srcSet={NIGHT_WEBP} type="image/webp" />
+            <img
+              src={NIGHT_PNG}
+              alt={hero.images.nightAlt}
+              width={HERO_WIDTH}
+              height={HERO_HEIGHT}
+              draggable={false}
+              decoding="async"
+              className={HERO_IMG_CLASS}
+            />
+          </picture>
+        ) : null}
+        <motion.div
+          className="absolute inset-0"
           initial={false}
           animate={{ opacity: isMorning ? 1 : 0 }}
           transition={fadeTransition}
-        />
+        >
+          <picture>
+            <source srcSet={MORNING_WEBP} type="image/webp" />
+            <img
+              src={MORNING_PNG}
+              alt={hero.images.morningAlt}
+              width={HERO_WIDTH}
+              height={HERO_HEIGHT}
+              draggable={false}
+              decoding="async"
+              fetchPriority="high"
+              className={HERO_IMG_CLASS}
+            />
+          </picture>
+        </motion.div>
       </div>
 
       {/* Top vignette — navbar contrast over sky */}
