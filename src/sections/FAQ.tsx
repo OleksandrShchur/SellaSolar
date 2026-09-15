@@ -30,9 +30,9 @@ export function FAQ() {
                   aria-expanded={isOpen}
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                 >
-                  <span className="font-heading text-sm font-semibold text-slate-ink md:text-base">
+                  <h3 className="font-heading text-sm font-semibold text-slate-ink md:text-base">
                     {item.question}
-                  </span>
+                  </h3>
                   <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}

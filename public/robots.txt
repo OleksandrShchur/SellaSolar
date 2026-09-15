@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Set VITE_SITE_URL at build time to replace REPLACE_WITH_SITE_URL (origin + base path, no trailing slash).
+Sitemap: REPLACE_WITH_SITE_URL/sitemap.xml
